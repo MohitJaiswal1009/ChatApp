@@ -29,13 +29,13 @@ export const sendMessage = async (req,res) => {
 
         await Promise.all([gotConversation.save(), newMessage.save()]);
          
-       // SOCKET IO
+        // SOCKET IO
         const receiverSocketId = getReceiverSocketId(receiverId);
         if(receiverSocketId){
             io.to(receiverSocketId).emit("newMessage", newMessage);
         }
         return res.status(201).json({
-           message:"Message send successful"
+            newMessage
         })
     } catch (error) {
         console.log(error);
